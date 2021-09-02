@@ -129,8 +129,14 @@ pub_handler(const char *topic, uint16_t topic_len, const uint8_t *chunk,
 
   if(strcmp(topic, "actuator") == 0) {
     printf("Received Actuator command\n");
-	printf("%s\n", chunk);
-    // Do something :)
+      printf("%s\n", chunk);
+        if(strcmp(chunk, "on")==0){
+          printf("Turn on the fan.\n");
+    	}else if (chunk, "off")==0){
+          printf("Turn off the fan.\n");
+    	}else{
+          printf("UNKNOWN COMMAND\n");
+    	}
     return;
   }
 }
@@ -264,15 +270,12 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 			  state = STATE_SUBSCRIBED;
 		  }
 
-			  
 		if(state == STATE_SUBSCRIBED){
 			// Publish something
-		    sprintf(pub_topic, "%s", "status");
-			
-			sprintf(app_buffer, "report %d", value);
-			
-			value++;
-				
+		    sprintf(pub_topic, "%s", "temperature");
+			value = 30 + rand() % 60
+			sprintf(app_buffer, "temperature: %d", value);
+							
 			mqtt_publish(&conn, NULL, pub_topic, (uint8_t *)app_buffer,
                strlen(app_buffer), MQTT_QOS_LEVEL_0, MQTT_RETAIN_OFF);
 		
