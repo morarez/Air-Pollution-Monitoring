@@ -96,11 +96,12 @@ static char client_id[BUFFER_SIZE];
 static char pub_topic[BUFFER_SIZE];
 static char sub_topic[BUFFER_SIZE];
 
-static int value = 0;
+static int aqi = 50;
 
 // Periodic timer to check the state of the MQTT client
 #define STATE_MACHINE_PERIODIC     (CLOCK_SECOND >> 1)
 static struct etimer periodic_timer;
+static int period = 0;
 
 /*---------------------------------------------------------------------------*/
 /*
@@ -126,17 +127,23 @@ pub_handler(const char *topic, uint16_t topic_len, const uint8_t *chunk,
 {
   printf("Pub Handler: topic='%s' (len=%u), chunk_len=%u\n", topic,
           topic_len, chunk_len);
-
-  if(strcmp(topic, "actuator") == 0) {
+   char t[11];
+   sprintf(t, "alarm%d", node_id);
+  if(strcmp(topic, t) == 0) {
     printf("Received Actuator command\n");
-      printf("%s\n", chunk);
-        if(strcmp(chunk, "on")==0){
-          printf("Turn on the fan.\n");
-    	}else if (chunk, "off")==0){
-          printf("Turn off the fan.\n");
-    	}else{
-          printf("UNKNOWN COMMAND\n");
-    	}
+printf("%s\n", chunk);
+    if(strcmp(chunk, "good")==0){
+        leds_on(LEDS_GREEN);
+        printf("Air Quality is good\n");
+    }else if (strcmp(chunk, "moderate")==0){
+        leds_on(LEDS_YELLOW);
+        printf("Air Quality is moderate\n");
+    }}else if (strcmp(chunk, "bad")==0){
+        leds_on(LEDS_RED);
+        printf("Air Quality is bad\n");
+    }else{
+        printf("UNKNOWN\n");
+    }
     return;
   }
 }
@@ -272,9 +279,9 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 
 		if(state == STATE_SUBSCRIBED){
 			// Publish something
-		    sprintf(pub_topic, "%s", "temperature");
-			value = 30 + rand() % 60
-			sprintf(app_buffer, "temperature: %d", value);
+		    sprintf(pub_topic, "%s", "AQI");
+			value = rand() % 300
+			sprintf(app_buffer, "AQI: %d", value);
 							
 			mqtt_publish(&conn, NULL, pub_topic, (uint8_t *)app_buffer,
                strlen(app_buffer), MQTT_QOS_LEVEL_0, MQTT_RETAIN_OFF);
