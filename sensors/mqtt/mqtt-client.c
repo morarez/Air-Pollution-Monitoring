@@ -96,7 +96,7 @@ static char client_id[BUFFER_SIZE];
 static char pub_topic[BUFFER_SIZE];
 static char sub_topic[BUFFER_SIZE];
 
-static int aqi = 50;
+static int aqi_value = 50;
 
 // Periodic timer to check the state of the MQTT client
 #define STATE_MACHINE_PERIODIC     (CLOCK_SECOND >> 1)
@@ -280,8 +280,8 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 		if(state == STATE_SUBSCRIBED){
 			// Publish something
 		    sprintf(pub_topic, "%s", "AQI");
-			value = rand() % 300
-			sprintf(app_buffer, "AQI: %d", value);
+			aqi_value = rand() % 300
+			sprintf(app_buffer, "{\"node\": %d, \"temperature\": %d, \"timestamp\": %lu}", node_id, value, clock_seconds());
 							
 			mqtt_publish(&conn, NULL, pub_topic, (uint8_t *)app_buffer,
                strlen(app_buffer), MQTT_QOS_LEVEL_0, MQTT_RETAIN_OFF);
