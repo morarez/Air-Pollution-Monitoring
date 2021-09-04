@@ -281,7 +281,7 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 			// Publish something
 		    sprintf(pub_topic, "%s", "AQI");
 			aqi_value = rand() % 300
-			sprintf(app_buffer, "{\"node\": %d, \"temperature\": %d, \"timestamp\": %lu}", node_id, value, clock_seconds());
+			sprintf(app_buffer, "{\"node\": %d, \"aqi\": %d, \"timestamp\": %lu}", node_id, aqi_value, clock_seconds());
 							
 			mqtt_publish(&conn, NULL, pub_topic, (uint8_t *)app_buffer,
                strlen(app_buffer), MQTT_QOS_LEVEL_0, MQTT_RETAIN_OFF);
