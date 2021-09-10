@@ -41,6 +41,7 @@
 #include "dev/leds.h"
 #include "os/sys/log.h"
 #include "mqtt-client.h"
+#include "node-id.h"
 
 #include <string.h>
 #include <strings.h>
@@ -280,7 +281,7 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 		if(state == STATE_SUBSCRIBED){
 			// Publish something
 		    sprintf(pub_topic, "%s", "AQI");
-			aqi_value = rand() % 300
+			aqi_value = rand() % 300;
 			sprintf(app_buffer, "{\"node\": %d, \"aqi\": %d, \"timestamp\": %lu}", node_id, aqi_value, clock_seconds());
 							
 			mqtt_publish(&conn, NULL, pub_topic, (uint8_t *)app_buffer,
