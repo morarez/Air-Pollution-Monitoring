@@ -129,7 +129,7 @@ pub_handler(const char *topic, uint16_t topic_len, const uint8_t *chunk,
   printf("Pub Handler: topic='%s' (len=%u), chunk_len=%u\n", topic,
           topic_len, chunk_len);
    char t[11];
-   sprintf(t, "alarm%d", node_id);
+   sprintf(t, "led%d", node_id);
   if(strcmp(topic, t) == 0) {
     printf("Received Actuator command\n");
 printf("%s\n", chunk);
@@ -139,7 +139,7 @@ printf("%s\n", chunk);
     }else if (strcmp(chunk, "moderate")==0){
         leds_on(LEDS_YELLOW);
         printf("Air Quality is moderate\n");
-    }}else if (strcmp(chunk, "bad")==0){
+    }else if (strcmp(chunk, "bad")==0){
         leds_on(LEDS_RED);
         printf("Air Quality is bad\n");
     }else{
