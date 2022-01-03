@@ -265,7 +265,7 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 		  if(state==STATE_CONNECTED){
 		  
 			  // Subscribe to a topic
-			  strcpy(sub_topic,"actuator");
+			  strcpy(sub_topic,"led");
 
 			  status = mqtt_subscribe(&conn, NULL, sub_topic, MQTT_QOS_LEVEL_0);
 
