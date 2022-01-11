@@ -15,7 +15,7 @@ static void res_post_put_handler(coap_message_t *request, coap_message_t *respon
 
 /* A simple actuator example, depending on the color query parameter and post variable mode, corresponding led is activated or deactivated */
 RESOURCE(res_leds,
-         "title=\"LEDs: ?color=r|g|y, POST/PUT mode=on|off\";rt=\"Control\"",
+         "title=\"LEDs: ?color=r|g|y, POST/PUT mode=good|moderate|unhealthy\";rt=\"Control\"",
          NULL,
          res_post_put_handler,
          res_post_put_handler,
@@ -47,12 +47,20 @@ res_post_put_handler(coap_message_t *request, coap_message_t *response, uint8_t 
   } if(success && (len = coap_get_post_variable(request, "mode", &mode))) {
     LOG_DBG("mode %s\n", mode);
 
-    if(strncmp(mode, "on", len) == 0) {
-      leds_on(LEDS_NUM_TO_MASK(led));
-    } else if(strncmp(mode, "off", len) == 0) {
-      leds_off(LEDS_NUM_TO_MASK(led));
+    if(strncmp(mode, "good", len) == 0) {
+         leds_off(LEDS_NUM_TO_MASK(led))
+         led = LEDS_GREEN;
+         leds_on(LEDS_NUM_TO_MASK(led));
+    } else if(strncmp(mode, "moderate", len) == 0) {
+         leds_off(LEDS_NUM_TO_MASK(led))
+         led = LEDS_YELLOW;
+         leds_on(LEDS_NUM_TO_MASK(led));
+    } else if(strncmp(mode, "unhealthy", len) == 0) {
+         leds_off(LEDS_NUM_TO_MASK(led))
+         led = LEDS_RED;
+         leds_on(LEDS_NUM_TO_MASK(led));
     } else {
-      success = 0;
+         success = 0;
     }
   } else {
     success = 0;
