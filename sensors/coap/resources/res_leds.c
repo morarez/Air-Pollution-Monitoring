@@ -48,17 +48,11 @@ res_post_put_handler(coap_message_t *request, coap_message_t *response, uint8_t 
     LOG_DBG("mode %s\n", mode);
 
     if(strncmp(mode, "good", len) == 0) {
-         leds_off(LEDS_NUM_TO_MASK(led))
-         led = LEDS_GREEN;
-         leds_on(LEDS_NUM_TO_MASK(led));
+         leds_set(LEDS_NUM_TO_MASK(LEDS_GREEN));
     } else if(strncmp(mode, "moderate", len) == 0) {
-         leds_off(LEDS_NUM_TO_MASK(led))
-         led = LEDS_YELLOW;
-         leds_on(LEDS_NUM_TO_MASK(led));
+         leds_set(LEDS_NUM_TO_MASK(LEDS_YELLOW));
     } else if(strncmp(mode, "unhealthy", len) == 0) {
-         leds_off(LEDS_NUM_TO_MASK(led))
-         led = LEDS_RED;
-         leds_on(LEDS_NUM_TO_MASK(led));
+         leds_set(LEDS_NUM_TO_MASK(LEDS_RED));
     } else {
          success = 0;
     }
