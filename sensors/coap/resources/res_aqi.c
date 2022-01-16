@@ -12,7 +12,7 @@ static void res_event_handler(void);
  * preferred_size and offset, but must respect the REST_MAX_CHUNK_SIZE limit for the buffer.
  * If a smaller block size is requested for CoAP, the REST framework automatically splits the data.
  */
-EVENT_RESOURCE(res_obs,
+EVENT_RESOURCE(res_aqi,
          "title=\"AQI \";obs;rt=\"AQI\"",
          res_get_handler,
          NULL,
