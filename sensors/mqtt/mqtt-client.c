@@ -133,13 +133,13 @@ pub_handler(const char *topic, uint16_t topic_len, const uint8_t *chunk,
   if(strcmp(topic, t) == 0) {
     printf("Received Actuator command\n");
 printf("%s\n", chunk);
-    if(strcmp(chunk, "good")==0){
+    if(strcmp((const char *)chunk, "good")==0){
         leds_on(LEDS_GREEN);
         printf("Air Quality is good\n");
-    }else if (strcmp(chunk, "moderate")==0){
+    }else if (strcmp((const char *)chunk, "moderate")==0){
         leds_on(LEDS_YELLOW);
         printf("Air Quality is moderate\n");
-    }else if (strcmp(chunk, "bad")==0){
+    }else if (strcmp((const char *)chunk, "bad")==0){
         leds_on(LEDS_RED);
         printf("Air Quality is bad\n");
     }else{
@@ -278,7 +278,7 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 			  state = STATE_SUBSCRIBED;
 		  }
 
-		if(state == STATE_SUBSCRIBED){
+		if(state == STATE_SUBSCRIBED && (period%60==0)){
 			// Publish something
 		    sprintf(pub_topic, "%s", "aqi-info");
 			aqi_value = rand() % 300;
@@ -293,6 +293,7 @@ PROCESS_THREAD(mqtt_client_process, ev, data)
 		}
 		
 		etimer_set(&periodic_timer, STATE_MACHINE_PERIODIC);
+	    	period++;
       
     }
 
