@@ -81,7 +81,7 @@ PROCESS_THREAD(node, ev, data)
     PROCESS_WAIT_EVENT();
 
       if (ev == PROCESS_EVENT_TIMER && data == &periodic_timer){
-	  aqi_value = rand() % 400
+	  aqi_value = rand() % 400;
 	  res_aqi.trigger();
 	  if(period%5==0) {
 		    LOG_DBG("Retrying/Pinging the server\n");
