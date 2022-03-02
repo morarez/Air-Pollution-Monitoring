@@ -4,10 +4,10 @@ This system aims to monitor the air quality index using sensors that are deploye
 * CoAP Network
 * Collector (that is connected to a database)
 
-# Deployment
+## Deployment
 System must be deployed on different environments. The MQTT network is simulated with real sensors on an IoT testbed. The CoAP network instead is on local machine using Cooja Simulator. Finally, the collector is running on the local machine.
 * NOTE: 
-## MQTT Network
+### MQTT Network
 Connect to the testbed (with the correct address instead of XX) via a terminal:
 ```
 ssh -i ./key -p 20XX user@iot.dii.unipi.it
@@ -38,9 +38,9 @@ make TARGET=nrf52840 BOARD=dongle mqtt-client.dfu-upload PORT=/dev/ttyACMXX
 ```
 Get the log:
 ```
-make TARGET=nrf52840 BOARD=dongle login PORT=/dev/ttyACM35
+make TARGET=nrf52840 BOARD=dongle login PORT=/dev/ttyACMXX
 ```
-## CoAP Network
+### CoAP Network
 First you need to log into contikier and launch Cooja:
 ```
 contikier
@@ -52,7 +52,7 @@ Now start a new simulation on Cooja and deploy the border router and connect the
 make TARGET=cooja connect-router-cooja
 ```
 After deploying the CoAP sensors on the simulation you can start the simulation.
-## Collector
+### Collector
 Simply run the collector with:
 ```
 Python main.py
