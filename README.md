@@ -46,13 +46,13 @@ contikier
 cd tools/cooja
 ant run
 ```
-Now start a new simulation on Cooja and deploy the border router and connect the serial server socket. Then, Go into rpl-border-router folder and lunch tunslip6:
+Now start a new simulation on Cooja and deploy the border router and connect the serial server socket. Then, go into rpl-border-router folder and lunch tunslip6:
 ```
 make TARGET=cooja connect-router-cooja
 ```
-After deploying the CoAP sensors on the simulation you can start the simulation.
+Then deploy the CoAP sensors and start the simulation.
 ### Collector
-Simply run the collector with:
+Simply run the collector:
 ```
 Python main.py
 ```
