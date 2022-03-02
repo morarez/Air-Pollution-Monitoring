@@ -54,5 +54,5 @@ Then deploy the CoAP sensors and start the simulation.
 ### Collector
 Simply run the collector:
 ```
-Python main.py
+python main.py
 ```
