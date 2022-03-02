@@ -5,7 +5,7 @@ This system aims to monitor the air quality index using sensors that are deploye
 * Collector (that is connected to a database)
 
 ## Deployment
-System must be deployed on different environments. The MQTT network is simulated with real sensors on an IoT testbed. The CoAP network instead is on local machine using Cooja Simulator. Finally, the collector is running on the local machine.
+System must be deployed on different environments. The MQTT network is simulated with real sensors on an IoT testbed. The CoAP network instead is on local machine simulated by Cooja Simulator. Finally, the collector is lunched on the local machine.
 ### MQTT Network
 Connect to the testbed (with the correct address instead of XX) via a terminal:
 ```
