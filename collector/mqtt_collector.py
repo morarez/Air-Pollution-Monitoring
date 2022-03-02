@@ -15,6 +15,12 @@ class MQTTClient:
         data = json.loads(msg.payload)
         node_id = data["node"]
         aqi = data["aqi"]
+        if aqi < 51:
+            self.client.publish("led","good")
+        elif aqi > 50 and aqi < 101:
+            self.client.publish("led","moderate")
+        elif aqi > 100:
+            self.client.publish("led","bad")
         timestamp = data["timestamp"]
         with self.connection.cursor() as cursor:
             sql = "INSERT INTO `mqtt` (`node_id`, `aqi` , `timestamp`) VALUES (%s, %s, %s)"
